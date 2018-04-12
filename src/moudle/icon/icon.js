@@ -7,6 +7,7 @@ import assign from 'object-assign';
 class Icon extends React.Component{
 
 	render() {
+		console.log("the style is " + this.getStyle());
 		return (
 			<div className = {this.getClassName()} style = {this.getStyle()} onClick = {this.onClick}>
 				{this.props.children}
