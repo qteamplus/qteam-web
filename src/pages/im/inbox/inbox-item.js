@@ -24,11 +24,11 @@ class InboxItem extends React.Component{
 				/>
 				<div className = 'body'>
 					<div id = 'inbox-item-cap' className = 'inbox-item-cap flex-horiz flex-vcenter' >
-						<div id = 'title' class = 'title text-overflow flex-fill'>
+						<div id = 'title' className = 'title text-overflow flex-fill'>
 						    QTeam
 						</div>
 						<div id = 'tag' className = ''>
-							<Icon size='16'
+							<Icon size={16}
 							      name = 'mute'  
 							/>
 						</div>
