@@ -5,8 +5,8 @@ class MessageArea extends React.Component {
     render () {
         return (
             <div className = 'message-area flex-space'>
-                <div classNmae = 'scroller thin-scroll'>
-                        
+                <div className = 'scroller thin-scroll'>
+
                 </div>
             </div>
         )
