@@ -19,3 +19,5 @@ RoomName.propTypes = {
     name: T.string.isRequired,
     className :T.string
 }
+
+export default RoomName;

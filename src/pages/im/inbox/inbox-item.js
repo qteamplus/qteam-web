@@ -91,7 +91,7 @@ class InboxItem extends React.Component{
 								service: target['service']
 							}
 						)
-					case 'room':
+					case 'room':			    
 						return React.createElement(
 							RoomName,
 							{name: target['topic']}
@@ -282,10 +282,10 @@ class InboxItem extends React.Component{
 			"_userId": "572c94809e3c72ee38daf950", 
 			"id": "5acb1ffd5b2ed8983b93c70c"
 		};
-
-		if (notification == null || notification == undefined) {
-			notification = mockNoti;
-		}
+		
+		//if (notification == null || notification == undefined) {
+		//	notification = mockNoti1;
+		//}
 
 		const {isPinned} = notification;
 		  
@@ -297,7 +297,8 @@ class InboxItem extends React.Component{
 			return React.createElement(
 				'div',
 				{className : inboxItemClass },
-				this.renderAvatar(notification), this.renderBody(isActive, isSelected, isRemovable, isFake, isClearingUnread, notification)
+				this.renderAvatar(notification), 
+				this.renderBody(isActive, isSelected, isRemovable, isFake, isClearingUnread, notification)
 			)
 	}
 }

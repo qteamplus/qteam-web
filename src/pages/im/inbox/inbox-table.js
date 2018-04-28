@@ -4,8 +4,18 @@ import './search-box.less';
 import InboxItem from './inbox-item';
 import Icon from '../../../moudle/icon/icon';
 
+
+import { connect } from 'dva';
+
 class InboxTable extends React.Component{
+  
      render() {
+
+        var {notifications} = this.props;
+
+        if(notifications==null) return null;
+
+        console.log(`InboxTable:this is the notifications ${this.props}`);
         return(
             <div className = 'inbox-table flex-space flex-vert'>
                 <div className = 'inbox-searchbox flex-static'>
@@ -18,16 +28,15 @@ class InboxTable extends React.Component{
                 </div>
                 <div id = 'scroll' className = "inbox-scroll flex-space thin-scroll">
                     <ul>
-                        <li className = 'list-item'><InboxItem/></li>
-                        <li className = 'list-item'><InboxItem/></li>
-                        <li className = 'list-item'><InboxItem/></li>
-                        <li className = 'list-item'><InboxItem/></li>
-                        <li className = 'list-item'><InboxItem/></li>
-                        <li className = 'list-item'><InboxItem/></li>
-                        <li className = 'list-item'><InboxItem/></li>
-                        <li className = 'list-item'><InboxItem/></li>
-                        <li className = 'list-item'><InboxItem/></li>
-                        <li className = 'list-item'><InboxItem/></li>
+                        {
+                            notifications.map(notification => 
+                                <li className = 'list-item'>
+                                <InboxItem
+                                    notification = {notification}
+                                />
+                                </li>
+                            )
+                        }
                     </ul>
                 </div>
             </div>
@@ -36,4 +45,11 @@ class InboxTable extends React.Component{
      }
 }
 
-export default InboxTable;
+
+ function mapStateToProps(state) {
+     const {notifications} = state.im;
+     return {notifications};
+   }
+
+ export default connect(mapStateToProps)(InboxTable);
+//export default InboxTable;
