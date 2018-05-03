@@ -2,9 +2,10 @@ import React from 'react';
 
 class UserAlias extends React.Component {
     render () {
+        const {defaultName} = this.props;
         return (
             <span className = 'name text-overflow'>
-                刘好义
+                {defaultName}
             </span>
         )
     }

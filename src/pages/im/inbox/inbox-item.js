@@ -157,7 +157,7 @@ class InboxItem extends React.Component{
 		if (isFake) return null;
 		if (!unreadNum) return null;
 		if (isClearingUnread) return null;
-		return React.cloneElement(
+		return React.createElement(
 			'span',
 			{ className: 'unread flex-static'},
 			isMute ? React.createElement(
