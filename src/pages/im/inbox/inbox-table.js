@@ -3,51 +3,72 @@ import  './inbox-table.less';
 import './search-box.less';
 import InboxItem from './inbox-item';
 import Icon from '../../../moudle/icon/icon';
-
-
 import { connect } from 'dva';
 
 class InboxTable extends React.Component{
   
-     render() {
+    renderSearchBar = () => {
+       return React.createElement(
+               'div',
+               {className: 'inbox-searchbox flex-static'},
+               React.createElement(
+                'div',
+                {className: 'search-box'},
+                    React.createElement(
+                        Icon,
+                        {className: 'search', name: 'search', size: 18 }
+                    ),
+                    React.createElement(
+                        'input',
+                        {type: 'text', className: 'input', id: 'searchBox', placeholder: 'Instant-search (ctrl + /)'}
+                    )
+                )
+        );
+    }
+    
+    renderInboxes = (_notifications) => {
+        return React.createElement(
+            'div',
+            {className:'inbox-scroll flex-space thin-scroll',id:'scroll'},
+            React.createElement(
+                'ul',
+                '',
+                _notifications.map(this.renderInbox)
+            )
+        )
+    }
 
+    renderInbox = (notification,index) => {
+        return React.createElement(
+            'li',
+            {className:'list-item'},
+                React.createElement(
+                    InboxItem,
+                    {
+                        notification:notification,
+                        isSelected: index === this.props.selectedNotyIndex
+                    }
+            )
+        )
+    }
+    
+    render() {
+        
         var {notifications} = this.props;
 
-        if(notifications==null) return null;
+        if(notifications == null) return null;
 
         console.log(`InboxTable:this is the notifications ${this.props}`);
-        return(
-            <div className = 'inbox-table flex-space flex-vert'>
-                <div className = 'inbox-searchbox flex-static'>
-                    <div className = 'search-box'>
-                          <Icon name = 'search'
-                                size = {18}
-                          />
-                          <input type = 'text' id = 'searchBox' className = 'input' placeholder = "Instant-search (ctrl + /)"/>
-                    </div>
-                </div>
-                <div id = 'scroll' className = "inbox-scroll flex-space thin-scroll">
-                    <ul>
-                        {
-                            notifications.map(notification => 
-                                <li className = 'list-item'>
-                                <InboxItem
-                                    notification = {notification}
-                                />
-                                </li>
-                            )
-                        }
-                    </ul>
-                </div>
-            </div>
-        )
-
+        return React.createElement(
+                'div',
+                {className: 'inbox-table flex-space flex-vert'},
+                this.renderSearchBar(),this.renderInboxes(notifications));
      }
 }
 
 
  function mapStateToProps(state) {
-     const {notifications} = state.im;
+     const {notifications,selectedNotyIndex} = state.im;
      return {notifications};
    }
 

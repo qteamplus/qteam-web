@@ -5,6 +5,7 @@ export default {
      
     state: {
         notifications : null,
+        selectedNotyIndex: null,
         teamid : 1,
     },
 
