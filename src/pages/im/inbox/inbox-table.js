@@ -6,7 +6,20 @@ import Icon from '../../../moudle/icon/icon';
 import { connect } from 'dva';
 
 class InboxTable extends React.Component{
-  
+
+    //响应点击InboxTable.InBox-item事件；
+    handleClickOnInBox = (event,notification)=>{
+        //派发事件。dispatch；
+        this.props.dispatch(
+            {
+                type: 'im/fetchMessages',
+                payload: {
+                    notification: notification,
+                },
+              }
+        );
+    }
+    
     renderSearchBar = () => {
        return React.createElement(
                'div',
@@ -46,6 +59,8 @@ class InboxTable extends React.Component{
                     InboxItem,
                     {
                         notification:notification,
+                        onClick:this.handleClickOnInBox,
+                        isActive: this.props._targetId === notification._targetId,
                         isSelected: index === this.props.selectedNotyIndex
                     }
             )
@@ -66,11 +81,10 @@ class InboxTable extends React.Component{
      }
 }
 
-
  function mapStateToProps(state) {
-     const {notifications,selectedNotyIndex} = state.im;
-     return {notifications};
-   }
+    const {notifications,selectedNotyIndex,_targetId} = state.im;
+    return {notifications,selectedNotyIndex,_targetId};
+}
 
- export default connect(mapStateToProps)(InboxTable);
+export default connect(mapStateToProps)(InboxTable);
 //export default InboxTable;

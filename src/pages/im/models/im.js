@@ -5,12 +5,17 @@ export default {
      
     state: {
         notifications : null,
+        messages:null,
+        _targetId:null,     //存储选中左侧成员列表
         selectedNotyIndex: null,
         teamid : 1,
     },
 
     reducers: {
         load(state, {payload} ){
+            return {...state,...payload};
+        },
+        loadMessages(state, {payload} ){
             return {...state,...payload};
         },
     },
@@ -22,6 +27,18 @@ export default {
                 type: 'load',
                 payload: {
                   notifications: data,
+                },
+              });
+        } ,
+        *fetchMessages({ payload }, { call, put }){
+            let {notification} = payload;
+            const {data} = yield call(imService.fetchMessages,notification);
+            console.log(data);
+            yield put({
+                type: 'loadMessages',
+                payload: {
+                    _targetId:notification._targetId,
+                    messages: data,
                 },
               });
         } ,
