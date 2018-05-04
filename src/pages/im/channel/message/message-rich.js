@@ -8,6 +8,8 @@ import classnames from 'classnames';
 import UserAlias from '../../../user/user-alias';
 import RelativeTime from '../../../../moudle/relative-time/relative-time';
 
+import obj2string from '../../../../utils/obj2string';
+
 
 
 /*
@@ -110,6 +112,9 @@ class MessageRich extends React.Component {
     render () {
         let {message} = this.props;
 
+        
+        console.log("this is one message______:" + obj2string(message));
+
       //  if(message == null) return null;
         let mockMessage = {
             "_id": "5ae90da41f31e6b7130ee188",
@@ -202,7 +207,7 @@ class MessageRich extends React.Component {
     }
 }
 
-MessageRich.propType = {
+MessageRich.propTypes = {
     isFavorite: T.bool,
     isDuplicated:T.bool,
     isUnread:T.bool,

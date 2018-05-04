@@ -58,7 +58,6 @@ class InboxTable extends React.Component{
 
         if(notifications == null) return null;
 
-        console.log(`InboxTable:this is the notifications ${this.props}`);
         return React.createElement(
                 'div',
                 {className: 'inbox-table flex-space flex-vert'},
