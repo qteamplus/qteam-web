@@ -5,6 +5,7 @@ import classnames from 'classnames';
 
 import './message-area.less';
 import MessageTimeline from './message-timeline';
+import { connect } from 'dva';
 
 
 class MessageArea extends React.Component {
@@ -50,4 +51,9 @@ MessageArea.propTypes = {
     messages: T.instanceOf(Immutable.Map)
 }
 
-export default MessageArea;
+function mapStateToProps(state) {
+    const {messages} = state.im;
+    return {messages};
+}
+
+export default connect(mapStateToProps)(MessageArea);

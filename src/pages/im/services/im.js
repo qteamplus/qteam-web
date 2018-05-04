@@ -7,5 +7,5 @@ export function fetchMessages(notification) {
   
   console.log(notification);
   const id = notification._targetId;
-  return request(`/api/messages?_told=${id}`);
+  return request(`/api/messages?_toId=${id}`);
 }
