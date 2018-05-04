@@ -33,7 +33,13 @@ var ICONS_MAP = {
 class InboxItem extends React.Component{
 	displayName = 'inbox-item';
 	handleClickOnComponent = (event) =>{
-		this.props.onClick(event,this.props.notification);
+		this.props.onClick(event, this.props.notification);
+	}
+	handleClickOnButtonRemove = (event)=> {
+		// if (!this.props.isRemovable) {
+		//   return;
+		// }
+		return this.props.onRemove(event, this.props.notification);
 	}
 	renderAvatar = (notification) => {
 	
@@ -127,7 +133,11 @@ class InboxItem extends React.Component{
 			{className :csTags},
 			React.createElement(
 				Icon,
-				{name : name ,className : className}
+				{
+					name: name ,
+					className: className,
+					onClick: this.handleClickOnButtonRemove
+				}
 			)
 		)
 

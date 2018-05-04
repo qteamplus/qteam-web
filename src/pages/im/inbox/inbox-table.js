@@ -19,7 +19,18 @@ class InboxTable extends React.Component{
               }
         );
     }
-    
+    handleClickOnInboxRemove = (event,notification)=>{
+        event.stopPropagation();
+        console.log('handleClickOnInboxRemove');
+        this.props.dispatch(
+            {
+                type: 'im/updateNotification',
+                payload: {
+                    notification: notification,
+                }, 
+            }
+        );
+    }
     renderSearchBar = () => {
        return React.createElement(
                'div',
@@ -60,6 +71,7 @@ class InboxTable extends React.Component{
                     {
                         notification:notification,
                         onClick:this.handleClickOnInBox,
+                        onRemove: this.handleClickOnInboxRemove,
                         isActive: this.props._targetId === notification._targetId,
                         isSelected: index === this.props.selectedNotyIndex
                     }
@@ -70,9 +82,7 @@ class InboxTable extends React.Component{
     render() {
         
         var {notifications} = this.props;
-
         if(notifications == null) return null;
-
         return React.createElement(
                 'div',
                 {className: 'inbox-table flex-space flex-vert'},

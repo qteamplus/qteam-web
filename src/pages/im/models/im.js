@@ -12,11 +12,18 @@ export default {
     },
 
     reducers: {
-        load(state, {payload} ){
+        load(state, { payload} ){
             return {...state,...payload};
         },
-        loadMessages(state, {payload} ){
+        loadMessages(state, { payload} ){
             return {...state,...payload};
+        },
+        updateNotification(state,{ payload}){
+            let {notification} = payload;
+            let notys = state.notifications.filter(item=>{
+                return item._id!=notification._id;
+            });
+            return {...state,notifications: notys};
         },
     },
 
