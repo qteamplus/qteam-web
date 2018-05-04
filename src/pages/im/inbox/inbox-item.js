@@ -6,7 +6,6 @@ import UnreadBadge from '../../../moudle/unread/unread-badge';
 import {PropTypes as T} from 'prop-types';
 import UserName from '../../user/user-name';
 import RoomName from '../../team/room-name';
-
 import Immutable from 'immutable';
 import classNames from 'classnames';
 import colors from '../../../utils/colors';
@@ -33,9 +32,10 @@ var ICONS_MAP = {
  **/
 class InboxItem extends React.Component{
 	displayName = 'inbox-item';
-
+	handleClickOnComponent = (event) =>{
+		this.props.onClick(event,this.props.notification);
+	}
 	renderAvatar = (notification) => {
-
 	
 		const {type, target} = notification;
 
@@ -133,7 +133,6 @@ class InboxItem extends React.Component{
 
 	}
 
-
 	renderInfo = (isFake, isClearingUnread, notification) => {
 		const {text, unreadNum, isMute} = notification;
 		return React.createElement(
@@ -190,10 +189,8 @@ class InboxItem extends React.Component{
 
 	render(){
 
-		var {_teamId, isActive, isSelected, isRemovable, isFake, isClearingUnread, notification} = this.props;
-
+		var {_teamId, isActive, isSelected, isRemovable, isFake, isClearingUnread, notification,onClick} = this.props;
 		//mock props
-		
 		const mockNoti =  {
 			"_id": "5acb1ffd5b2ed8983b93c70c", 
 			"type": "dms", 
@@ -288,7 +285,6 @@ class InboxItem extends React.Component{
 		//}
 
 		const {isPinned} = notification;
-		  
 		const inboxItemClass = classNames('inbox-item', {
 			'active': isActive,
 			'pinned': isPinned,
@@ -296,7 +292,10 @@ class InboxItem extends React.Component{
 				});
 			return React.createElement(
 				'div',
-				{className : inboxItemClass },
+				{
+					className: inboxItemClass, 
+					onClick: this.handleClickOnComponent 
+				},
 				this.renderAvatar(notification), 
 				this.renderBody(isActive, isSelected, isRemovable, isFake, isClearingUnread, notification)
 			)
