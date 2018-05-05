@@ -10,6 +10,7 @@
     "dva": "^2.2.2",
     "mockjs": "^1.0.1-beta3",
     "react-textarea-autosize": "^6.1.0",
+    "debounce": "1.0.0",
     "umi": "^1.0.0-0",
     "umi-plugin-dva": "^0.1.5"
   },
