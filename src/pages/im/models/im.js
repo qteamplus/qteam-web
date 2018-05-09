@@ -95,7 +95,11 @@ export default {
             }
         } ,
     },
-
+    //发送消息；
+    *sendMessage({ payload },{ call, put, select }){
+        const { text } = payload;
+        console.log("text=" + text);
+     },
     subscriptions: {
         setup({ dispatch, history }) {
           return history.listen(({ pathname, query }) => {
