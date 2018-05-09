@@ -5,7 +5,20 @@ import './message-editor.less'
 
 
 class MessageEditor extends React.Component {
+    constructor(props){
+        super();
+        this.state={
+            text:'',
+        };
+    }
     submitContent = () => {
+        console.log('MessageEditor.submitContent=' + this.state.text);
+        this.props.dispatch({
+                type:'im/sendMessage',
+                payload:{
+                    text: this.state.text
+                }
+            });
         // var displayType, text;
         // if (!(this.state.text.trim().length > 0)) {
         //   return;
@@ -22,8 +35,8 @@ class MessageEditor extends React.Component {
         // }
     }
     onChange = (event) => {
-        // var examineText, newState, result, selectionEnd, selectionStart, text, trigger;
-        // text = event.target.value;
+        var examineText, newState, result, selectionEnd, selectionStart, text, trigger;
+        text = event.target.value;
         // selectionStart = this.refs.textarea.selectionStart;
         // selectionEnd = this.refs.textarea.selectionEnd;
         // newState = {
@@ -55,7 +68,7 @@ class MessageEditor extends React.Component {
         //   newState.suggestCommands = result.suggestCommands;
         //   newState.showCommandMenu = result.showCommandMenu;
         // }
-        // this.setState(newState);
+        this.setState({text:text});
         // return this.debounceSaveDraft(this.props._teamId, this.props._channelId, text);
     }
 
@@ -70,13 +83,16 @@ class MessageEditor extends React.Component {
         if (event.keyCode === keyboard.enter) {
           pressedCtrl = event.ctrlKey || event.metaKey;
           pressedShift = event.shiftKey;
-          ctrlEnter = this.state.enterMethod === 'ctrlEnter' && pressedCtrl;
-          shiftEnter = this.state.enterMethod === 'shiftEnter' && pressedShift;
-          enter = this.state.enterMethod === 'enter' && !pressedCtrl && !pressedShift;
-          if (ctrlEnter || shiftEnter || enter) {
-            event.preventDefault();
-            return this.submitContent();
-          }
+        //   ctrlEnter = this.state.enterMethod === 'ctrlEnter' && pressedCtrl;
+        //   shiftEnter = this.state.enterMethod === 'shiftEnter' && pressedShift;
+        //   enter = this.state.enterMethod === 'enter' && !pressedCtrl && !pressedShift;
+            ctrlEnter = pressedCtrl;
+            shiftEnter = pressedShift;
+            enter = !pressedCtrl && !pressedShift;
+            if (ctrlEnter || shiftEnter || enter) {
+                event.preventDefault();
+                return this.submitContent();
+            }
         }
     }
     renderTextarea =()=>{
@@ -86,6 +102,7 @@ class MessageEditor extends React.Component {
                 className: 'lite-textbox',
                 minRows: 1,
                 maxRows: 5,
+                value: this.state.text,
                 onChange: this.onChange,
                 onClick: this.onChange,
                 onKeyUp: this.onChange,
