@@ -125,8 +125,9 @@ MessageArea.propTypes = {
 }
 
 function mapStateToProps(state) {
-    const {messages} = state.im;
-    return {messages};
+    const { target2messages, _targetId } = state.im;
+    const messages = target2messages.get(_targetId);
+    return  { messages };
 }
 
 export default connect(mapStateToProps)(MessageArea);

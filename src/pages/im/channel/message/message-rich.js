@@ -112,9 +112,6 @@ class MessageRich extends React.Component {
     render () {
         let {message} = this.props;
 
-        
-        console.log("this is one message______:" + obj2string(message));
-
       //  if(message == null) return null;
         let mockMessage = {
             "_id": "5ae90da41f31e6b7130ee188",

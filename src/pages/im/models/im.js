@@ -4,11 +4,10 @@ export default {
     namespace: 'im',
      
     state: {
-        notifications : null,
-        messages:null,
-        user2messages:[],
+        notifications: null,
+        target2messages: new Map(),
         // [{
-        //     userId:'',
+        //     _targetId:'',
         //     messages:[
         //         {
 
@@ -18,40 +17,36 @@ export default {
         //         }
         //     ]
         // }]
-        _targetId:null,     //存储选中左侧成员列表
+        _targetId: null,   
         selectedNotyIndex: null,
         teamid : 1,
     },
 
     reducers: {
         load(state, { payload} ){
-            return {...state,...payload};
+            return { ...state,...payload };
         },
-        loadMessages(state, { payload} ){
-            let {_targetId,messages} = payload;
-
-            let _users = state.user2messages.filter(item=>{
-                return item.userId===_targetId;
-            })
-
-            if(_users==null || _users.length<1){
-                state.user2messages.push({userId: _targetId,messages: messages});
-            }
-            return {...state,messages,_targetId};
+        loadMessages(state, { payload } ){
+           // let target2messages = Object.assign({},state.target2messages);
+            let newState = {target2messages: state.target2messages.set(payload._targetId, payload.messages), _targetId: payload._targetId};
+            return { ...state,  ...newState };
         },
         updateNotification(state,{ payload}){
             let {notification} = payload;
             let notys = state.notifications.filter(item=>{
-                return item._id!=notification._id;
+                return item._id != notification._id;
             });
-            return {...state,notifications: notys};
+            return {...state, notifications: notys};
         },
+        targetSelected(state, { payload }){
+            return { ...state, ...{ _targetId: payload._targetId}}
+        }
     },
 
     effects:{
         *fetch({ payload }, { call, put }){
             const {data} = yield call(imService.fetch);
-            data.sort((a,b)=>{
+            data.sort((a,b) => {
                 if(b.createdAt > a.createdAt) return 1;
                 if(b.createdAt === a.createdAt) return 0;
                 if(b.createdAt < a.createdAt) return -1;
@@ -64,23 +59,20 @@ export default {
               });
         } ,
         *fetchMessages({ payload }, { call, put ,select}){
-            let {notification} = payload;
-            const _user2messages =yield select(state=>state.im.user2messages);
-            let _users = _user2messages.filter(item=>{
-                return item.userId===notification._targetId;
-            })
-            if(_users!=null && _users.length>0){
-                //本地应存储当前用户的聊天记录；
+            let { notification } = payload;
+            const _target2messages =yield select( state => state.im.target2messages);
+            let _users = _target2messages.get(notification._targetId);
+           
+            if(_users != null && _users.length > 0){
                 yield put({
-                    type: 'loadMessages',
+                    type: 'targetSelected',
                     payload: {
-                        _targetId:notification._targetId,
-                        messages: _users[0].messages,
+                        _targetId: notification._targetId
                     },
                 });
             }else{
-                const {data} = yield call(imService.fetchMessages,notification);
-                data.sort((a,b)=>{
+                const { data } = yield call(imService.fetchMessages, notification);
+                data.sort((a,b) => {
                     if(b.createdAt < a.createdAt) return 1;
                     if(b.createdAt === a.createdAt) return 0;
                     if(b.createdAt > a.createdAt) return -1;
@@ -88,7 +80,7 @@ export default {
                 yield put({
                     type: 'loadMessages',
                     payload: {
-                        _targetId:notification._targetId,
+                        _targetId: notification._targetId,
                         messages: data,
                     },
                 });
