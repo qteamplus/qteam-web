@@ -23,7 +23,7 @@ export default {
     },
 
     reducers: {
-        load(state, { payload} ){
+        loadNotifications(state, { payload} ){
             return { ...state,...payload };
         },
         loadMessages(state, { payload } ){
@@ -44,7 +44,7 @@ export default {
     },
 
     effects:{
-        *fetch({ payload }, { call, put }){
+        *fetchNotifications({ payload }, { call, put }){
             const {data} = yield call(imService.fetch);
             data.sort((a,b) => {
                 if(b.createdAt > a.createdAt) return 1;
@@ -52,7 +52,7 @@ export default {
                 if(b.createdAt < a.createdAt) return -1;
             })
             yield put({
-                type: 'load',
+                type: 'loadNotifications',
                 payload: {
                   notifications: data,
                 },
@@ -61,9 +61,8 @@ export default {
         *fetchMessages({ payload }, { call, put ,select}){
             let { notification } = payload;
             const _target2messages =yield select( state => state.im.target2messages);
-            let _users = _target2messages.get(notification._targetId);
            
-            if(_users != null && _users.length > 0){
+            if(_target2messages.has(notification._targetId)){
                 yield put({
                     type: 'targetSelected',
                     payload: {
@@ -92,7 +91,7 @@ export default {
         setup({ dispatch, history }) {
           return history.listen(({ pathname, query }) => {
             if (pathname === '/im') {
-              dispatch({ type: 'fetch', payload: query });
+              dispatch({ type: 'fetchNotifications', payload: query });
             }
           });
         },
