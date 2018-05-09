@@ -4,7 +4,7 @@ export default {
     namespace: 'im',
      
     state: {
-        notifications: null,
+        notifications: [],
         target2messages: new Map(),
         // [{
         //     _targetId:'',
@@ -23,7 +23,7 @@ export default {
     },
 
     reducers: {
-        loadNotifications(state, { payload} ){
+        loadNotifications(state, { payload } ){
             return { ...state,...payload };
         },
         loadMessages(state, { payload } ){
@@ -31,9 +31,9 @@ export default {
             let newState = {target2messages: state.target2messages.set(payload._targetId, payload.messages), _targetId: payload._targetId};
             return { ...state,  ...newState };
         },
-        updateNotification(state,{ payload}){
-            let {notification} = payload;
-            let notys = state.notifications.filter(item=>{
+        updateNotification(state,{ payload }){
+            let { notification } = payload;
+            let notys = state.notifications.filter(item => {
                 return item._id != notification._id;
             });
             return {...state, notifications: notys};
@@ -45,7 +45,7 @@ export default {
 
     effects:{
         *fetchNotifications({ payload }, { call, put }){
-            const {data} = yield call(imService.fetch);
+            const { data } = yield call(imService.fetch);
             data.sort((a,b) => {
                 if(b.createdAt > a.createdAt) return 1;
                 if(b.createdAt === a.createdAt) return 0;

@@ -7,9 +7,8 @@ import { connect } from 'dva';
 
 class InboxTable extends React.Component{
 
-    //响应点击InboxTable.InBox-item事件；
-    handleClickOnInBox = (event,notification)=>{
-        //派发事件。dispatch；
+
+    handleClickOnInBox = (event,notification) => {
         this.props.dispatch(
             {
                 type: 'im/fetchMessages',
@@ -19,7 +18,7 @@ class InboxTable extends React.Component{
               }
         );
     }
-    handleClickOnInboxRemove = (event,notification)=>{
+    handleClickOnInboxRemove = (event,notification) => {
         event.stopPropagation();
         console.log('handleClickOnInboxRemove');
         this.props.dispatch(
@@ -81,7 +80,7 @@ class InboxTable extends React.Component{
     
     render() {
         
-        var {notifications} = this.props;
+        var { notifications } = this.props;
         if(notifications == null) return null;
         return React.createElement(
                 'div',
@@ -91,8 +90,8 @@ class InboxTable extends React.Component{
 }
 
  function mapStateToProps(state) {
-    const {notifications,selectedNotyIndex,_targetId} = state.im;
-    return {notifications,selectedNotyIndex,_targetId};
+    const { notifications, selectedNotyIndex, _targetId} = state.im;
+    return { notifications, selectedNotyIndex, _targetId};
 }
 
 export default connect(mapStateToProps)(InboxTable);
