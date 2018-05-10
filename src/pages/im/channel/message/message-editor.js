@@ -1,7 +1,8 @@
 import React from 'react';
 import Textarea from 'react-textarea-autosize';
-import keyboard from '../../../../utils/keyboard'
-import './message-editor.less'
+import keyboard from '../../../../utils/keyboard';
+import './message-editor.less';
+import { connect } from 'dva';
 
 
 class MessageEditor extends React.Component {
@@ -122,4 +123,11 @@ class MessageEditor extends React.Component {
     }
 }
 
-export default MessageEditor;
+function mapStateToProps(state) {
+    const { _targetId } = state.im;
+    return  { _targetId };
+}
+
+export default connect(mapStateToProps)(MessageEditor);
+
+//export default MessageEditor;

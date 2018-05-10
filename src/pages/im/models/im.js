@@ -40,6 +40,15 @@ export default {
         },
         targetSelected(state, { payload }){
             return { ...state, ...{ _targetId: payload._targetId}}
+        },
+
+        updateMessages(state, { payload }){
+            const message = payload.message;
+            const targetId =  message._targetId;
+            let messages = [...state.target2messages.get(targetId), message];
+
+            let newState = {target2messages: state.target2messages.set(targetId, messages)};
+            return { ...state, ...newState};
         }
     },
 
@@ -58,7 +67,7 @@ export default {
                 },
               });
         } ,
-        *fetchMessages({ payload }, { call, put ,select}){
+        *fetchMessages({ payload }, { call, put, select}){
             let { notification } = payload;
             const _target2messages =yield select( state => state.im.target2messages);
            
@@ -85,12 +94,20 @@ export default {
                 });
             }
         } ,
+        *sendMessage({ payload },{ call, put, select }){
+            const { text } = payload;
+            const { data } = yield call(imService.sendMessages);
+            yield put(
+                {
+                    type: 'updateMessages',
+                    payload: {
+                        message: data,
+                    }
+                }
+            ) 
+        },
     },
-    //发送消息；
-    *sendMessage({ payload },{ call, put, select }){
-        const { text } = payload;
-        console.log("text=" + text);
-     },
+
     subscriptions: {
         setup({ dispatch, history }) {
           return history.listen(({ pathname, query }) => {
