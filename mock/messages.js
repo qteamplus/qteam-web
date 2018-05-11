@@ -1,5 +1,7 @@
 import Mock from 'mockjs';
 
+//import obj2string from '../src/utils/obj2string';
+
 
 const qs = require('qs');
 
@@ -2317,7 +2319,7 @@ let db1 = Mock.mock (
 );
 
 
-let sendMessage = Mock.mock(
+var message2send = 
     {
         "__v": 0,
         "to": {
@@ -2392,8 +2394,7 @@ let sendMessage = Mock.mock(
         "_toId": "5acb1da2384e3c007b0637e0",
         "_creatorId": "572c94809e3c72ee38daf950",
         "id": "5af3b317095dd9ac456ae678"
-    }
-)
+    };
 module.exports={
     [`GET /api/messages`](req,res){
         const {_toId} = qs.parse(req.query);
@@ -2404,7 +2405,10 @@ module.exports={
         }
     },
     [`POST /api/messages`](req,res){
-        const { body } = qs.parse(req.query);        
+        const  {text}  = qs.parse(req.body); 
+        // can't get request body ?
+        console.log( "the body si ---- " + text);
+        let sendMessage = Mock.mock(message2send);       
         res.status(200).json(sendMessage);
     },
 }

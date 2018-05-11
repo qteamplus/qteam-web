@@ -12,26 +12,23 @@ class MessageArea extends React.Component {
     displayName = 'message-area';
 
     componentDidMount = () =>{
-        console.log("MessageArea.componentDidMount");
         this.detect = debounce(this.detect, 300);
+        this.jumpToBottom();
+    }
+
+    componentDidUpdate = () => {
         this.jumpToBottom();
     }
     onWheel = () =>{
         return this.detect();
     }
     jumpToBottom = () => {
-        // if (this.props.isSearch) {
-        //   return;
-        // }
-        return window.requestAnimationFrame((function(_this) {
-          return function() {
-            var node;
-            node = _this.getScrollEl();
-            if (node) {
-              return node.scrollTop = node.scrollHeight;
+        window.requestAnimationFrame (() => {
+            let node = this.getScrollEl();
+            if (node){
+                node.scrollTop = node.scrollHeight;
             }
-          };
-        })(this));
+        })
     }
     // dirtyScrollToBottom = () => {
     //     var node;

@@ -94,9 +94,9 @@ export default {
                 });
             }
         } ,
-        *sendMessage({ payload },{ call, put, select }){
-            const { text } = payload;
-            const { data } = yield call(imService.sendMessages);
+        *sendMessage({ payload: values },{ call, put, select }){
+           // const { text } = payload;
+            const { data } = yield call(imService.sendMessages, values);
             yield put(
                 {
                     type: 'updateMessages',
