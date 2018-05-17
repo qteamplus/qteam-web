@@ -9,7 +9,7 @@ function Header({ location }) {
       theme="dark"
     >
       <Menu.Item key="/">
-        <Link to="/"><Icon type="home" />Home</Link>
+        <Link to="/account/signin">Signin</Link>
       </Menu.Item>
       <Menu.Item key="/umi">
         <Link to="/im">Inbox</Link>
