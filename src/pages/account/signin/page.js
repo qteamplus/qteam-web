@@ -1,10 +1,20 @@
 
 import React from 'react';
 import  './sign.less';
+import ChatWatcher from '../../../msgService/ChatWatcher';
 
 class Signin extends React.Component{
 
     displayName = 'app-signin';
+
+    signin = (e) => {
+        e.preventDefault();
+        let BOSH_SERVICE = 'http://localhost:7070/http-bind/';
+        let userName = this.refs.account.value;
+        let password = this.refs.password.value;
+        window.ChatWatcher.connect(BOSH_SERVICE,userName,'windows10.microdone.cn','pc0.0.1',password);
+      //  console.log (`${this.refs.account.value},${this.refs.password.value}`);
+    }
 
     /*
      *   main-card app-feature  [brand-cover + appbrand]
@@ -33,21 +43,28 @@ class Signin extends React.Component{
     renderAccount(){
         return React.createElement(
             'div',
-            { className: 'account' },
-            <input type= 'text' placeholder = '邮箱/手机号'></input>
+            { 
+                className: 'account',
+             },
+            <input ref = 'account' type= 'text' placeholder = '邮箱/手机号'></input>
         )
     };
     renderPassword(){
         return React.createElement(
             'div',
-            { className: 'password' },
-            <input type= 'password' placeholder = '密码'></input>
+            { 
+                className: 'password' ,
+            },
+            <input ref = 'password' type= 'password' placeholder = '密码'></input>
         )
     };
     renderSubmit(){
         return React.createElement(
             'div',
-            { className: 'submit' },
+            {
+                 className: 'submit' ,
+                 onClick: this.signin
+            },
             'Signin'
         )
     };
