@@ -1,5 +1,7 @@
 
-import {routerRedux} from 'dva/router'
+import {routerRedux} from 'dva/router';
+import ChatWatcher from '../../../../msgService/ChatWatcher';
+
 export default{
     namespace:"signin",
     state:{
