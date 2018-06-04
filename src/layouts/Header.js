@@ -15,7 +15,7 @@ function Header({ location }) {
         <Link to="/im">Inbox</Link>
       </Menu.Item>
       <Menu.Item key="/dva">
-        <a href="https://github.com/dvajs/dva" target="_blank">dva</a>
+        <a href="/login" target="_blank">dva</a>
       </Menu.Item>
       <Menu.Item key="/404">
         <Link to="/page-you-dont-know"><Icon type="frown-circle" />404</Link>
