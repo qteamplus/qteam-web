@@ -14,6 +14,7 @@ class MessageEditor extends React.Component {
     }
     submitContent = () => {
         console.log('MessageEditor.submitContent=' + this.state.text);
+        this.setState({text:''});
         this.props.dispatch({
                 type:'im/sendMessage',
                 payload:{

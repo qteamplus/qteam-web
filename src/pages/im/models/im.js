@@ -116,6 +116,22 @@ export default {
             }
           });
         },
+        watcherChatEvent({dispatch}){
+            return window.ChatWatcher.chatEvent((from,type,data)=>{
+                 let v = {
+                             from:from,
+                             to:window.ChatWatcher.myJid,
+                             body:data,
+                             time:'',
+                             type:'RECV',
+                         };
+                 console.log(`${v.from}:${v.body}` );        
+                 dispatch({
+                     type:'receive',
+                     payload:{recv_messages:[v]},
+                 });
+            });
+         },
       },
 }
 

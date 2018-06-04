@@ -7,10 +7,13 @@
     "precommit": "npm run lint"
   },
   "dependencies": {
+    "debounce": "1.0.0",
     "dva": "^2.2.2",
+    "jquery": "^3.3.1",
     "mockjs": "^1.0.1-beta3",
     "react-textarea-autosize": "^6.1.0",
-    "debounce": "1.0.0",
+    "strophe.js": "^1.2.14",
+    "strophejs-plugin-roster": "^1.1.0",
     "umi": "^1.0.0-0",
     "umi-plugin-dva": "^0.1.5"
   },
